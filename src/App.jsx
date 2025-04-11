@@ -6,7 +6,7 @@ import Category from "./pages/Category";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/tfhblog">
       <div className="min-h-screen bg-gray-50">
         <Navbar />
         <main className="container mx-auto px-4 py-8 md:px-20 md:py-12">
