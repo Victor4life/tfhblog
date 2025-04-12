@@ -3,6 +3,7 @@ import { client } from "../lib/prismic";
 import { format } from "date-fns"; // Add this import
 import { Link } from "react-router-dom"; // Make sure this is also imported
 import FeaturedBlog from "../components/FeaturedBlog";
+import PopularTopics from "../components/PopularTopics";
 
 function Home() {
   const [articles, setArticles] = useState(null);
@@ -82,8 +83,10 @@ function Home() {
           </article>
         ))}
       </div>
+      <div className="mt-8">
+        <PopularTopics />
+      </div>
     </>
   );
 }
-
 export default Home;
