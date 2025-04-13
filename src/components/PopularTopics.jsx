@@ -45,17 +45,13 @@ const MarqueeItem = styled.span`
 
 const PopularTopics = () => {
   const topicsFirst = [
-    { text: "React Development", color: "#61dafb33" },
-    { text: "JavaScript Tips", color: "#f7df1e33" },
-    { text: "Web Security", color: "#ff575733" },
-    { text: "CSS Tricks", color: "#2965f133" },
+    { text: "Health", color: "#90EE90" }, // Light green
+    { text: "Entertainment", color: "#FFB6C1" }, // Light pink
   ];
 
   const topicsSecond = [
-    { text: "Node.js Basics", color: "#3c873a33" },
-    { text: "API Design", color: "#ff8c0033" },
-    { text: "Database Management", color: "#00758f33" },
-    { text: "Cloud Computing", color: "#ff990033" },
+    { text: "Technology", color: "#87CEEB" }, // Light blue
+    { text: "Finance", color: "#DDA0DD" }, // Light purple
   ];
 
   return (

@@ -22,3 +22,4 @@ export const client = prismic.createClient(repositoryName, {
     },
   ],
 });
+ 
