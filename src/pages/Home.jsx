@@ -4,6 +4,7 @@ import { format } from "date-fns"; // Add this import
 import { Link } from "react-router-dom"; // Make sure this is also imported
 import FeaturedBlog from "../components/FeaturedBlog";
 import PopularTopics from "../components/PopularTopics";
+import styled, { keyframes } from "styled-components";
 
 function Home() {
   const [articles, setArticles] = useState(null);
@@ -17,8 +18,45 @@ function Home() {
     fetchArticles();
   }, []);
 
+  const bounce = keyframes`
+  0%, 80%, 100% { 
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+`;
+
+  const LoadingContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  `;
+
+  const Dot = styled.span`
+    width: 8px;
+    height: 8px;
+    background-color: #333;
+    border-radius: 50%;
+    display: inline-block;
+    animation: ${bounce} 1.4s infinite ease-in-out;
+    animation-delay: ${(props) => props.delay};
+  `;
+  const LoadingDots = () => {
+    return (
+      <LoadingContainer role="status">
+        <Dot delay="0s" />
+        <Dot delay="0.2s" />
+        <Dot delay="0.4s" />
+        <span className="sr-only">Loading...</span>
+      </LoadingContainer>
+    );
+  };
+
+  // Replace your current loading code with:
   if (!articles) {
-    return <div>Loading...</div>;
+    return <LoadingDots />;
   }
 
   return (
