@@ -61,7 +61,7 @@ function Home() {
   }
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-2">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main content area */}
         <main className="lg:w-3/4">
