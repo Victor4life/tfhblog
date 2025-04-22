@@ -9,7 +9,7 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <main className="container mx-auto px-4 py-8 md:px-20 md:py-12">
+        <main className="container mx-auto px-4 py-8 md:px-10 md:py-10">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/article/:uid" element={<Article />} />

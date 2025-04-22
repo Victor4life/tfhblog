@@ -11,4 +11,9 @@ export default defineConfig({
   css: {
     postcss: true,
   },
+  optimizeDeps: {
+    exclude: [
+      // Add the problematic dependencies here
+    ],
+  },
 });
