@@ -113,7 +113,7 @@ const SponsoredPosts = () => {
 
   return (
     <>
-      <h2 className="text-xl md:text-3xl font-bold text-black mb-8 py-2 uppercase tracking-wide border-b-2 border-gray-200 hover:text-blue-600 transition-colors duration-300">
+      <h2 className="text-xl md:text-3xl font-bold text-blue-600 mb-8 py-2 uppercase tracking-wide border-b-2 border-gray-200 hover:text-blue-600 transition-colors duration-300">
         Latest News
       </h2>
       <SponsoredPostsWrapper>

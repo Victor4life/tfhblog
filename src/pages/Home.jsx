@@ -6,6 +6,7 @@ import FeaturedBlog from "../components/FeaturedBlog";
 import PopularTopics from "../components/PopularTopics";
 import styled, { keyframes } from "styled-components";
 import SponsoredPosts from "../components/sponsoredPosts";
+import CelebrityPoll from "../components/CelebrityPoll";
 
 function Home() {
   const [articles, setArticles] = useState(null);
@@ -66,7 +67,7 @@ function Home() {
         {/* Main content area */}
         <main className="lg:w-3/4">
           <FeaturedBlog />
-          <h2 className="text-xl md:text-3xl font-bold text-black mb-8 py-4 uppercase tracking-wide border-b-2 border-gray-200 hover:text-blue-600 transition-colors duration-300">
+          <h2 className="text-xl md:text-3xl font-bold text-blue-600 mb-8 py-4 uppercase tracking-wide border-b-2 border-gray-200 hover:text-blue-600 transition-colors duration-300">
             Latest Articles
           </h2>
 
@@ -125,19 +126,21 @@ function Home() {
               </article>
             ))}{" "}
           </div>
-
-          <div className="mt-8">
-            <PopularTopics />
-          </div>
         </main>
 
         {/* Sidebar */}
         <aside className="lg:w-1/4">
           <div className="sticky top-4">
             <SponsoredPosts />
+            <CelebrityPoll />
           </div>
         </aside>
       </div>
+      <main className="w-full">
+        <div className="mt-8">
+          <PopularTopics />
+        </div>
+      </main>
     </div>
   );
 }

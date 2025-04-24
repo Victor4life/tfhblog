@@ -41,7 +41,7 @@ const FeaturedBlog = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
-    arrows: true,
+    arrows: false,
     responsive: [
       {
         breakpoint: 768,
