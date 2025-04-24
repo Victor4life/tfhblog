@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { client } from "../lib/prismic";
-import { format } from "date-fns"; // Add this import
-import { Link } from "react-router-dom"; // Make sure this is also imported
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import FeaturedBlog from "../components/FeaturedBlog";
 import PopularTopics from "../components/PopularTopics";
-import styled, { keyframes } from "styled-components";
 import SponsoredPosts from "../components/sponsoredPosts";
 import CelebrityPoll from "../components/CelebrityPoll";
+import styled, { keyframes } from "styled-components";
 
 function Home() {
   const [articles, setArticles] = useState(null);
@@ -16,24 +16,20 @@ function Home() {
       const response = await client.getAllByType("article");
       setArticles(response);
     };
-
     fetchArticles();
   }, []);
 
   const bounce = keyframes`
-  0%, 80%, 100% { 
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-`;
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+  `;
 
   const LoadingContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
+    padding: 3rem;
   `;
 
   const Dot = styled.span`
@@ -45,103 +41,101 @@ function Home() {
     animation: ${bounce} 1.4s infinite ease-in-out;
     animation-delay: ${(props) => props.delay};
   `;
-  const LoadingDots = () => {
-    return (
-      <LoadingContainer role="status">
-        <Dot delay="0s" />
-        <Dot delay="0.2s" />
-        <Dot delay="0.4s" />
-        <span className="sr-only">Loading...</span>
-      </LoadingContainer>
-    );
-  };
 
-  // Replace your current loading code with:
-  if (!articles) {
-    return <LoadingDots />;
-  }
+  const LoadingDots = () => (
+    <LoadingContainer role="status">
+      <Dot delay="0s" />
+      <Dot delay="0.2s" />
+      <Dot delay="0.4s" />
+      <span className="sr-only">Loading...</span>
+    </LoadingContainer>
+  );
+
+  if (!articles) return <LoadingDots />;
 
   return (
-    <div className="container mx-auto px-2">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Main Row */}
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Main content area */}
-        <main className="lg:w-3/4">
+        {/* Left Column */}
+        <main className="lg:w-3/4 space-y-8">
           <FeaturedBlog />
-          <h2 className="text-xl md:text-3xl font-bold text-blue-600 mb-8 py-4 uppercase tracking-wide border-b-2 border-gray-200 hover:text-blue-600 transition-colors duration-300">
-            Latest Articles
-          </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {articles.map((article) => (
-              <article
-                key={article.id}
-                className="bg-white overflow-hidden transition-shadow"
-              >
-                <img
-                  src={article.data.featured_image.url}
-                  alt={article.data.featured_image.alt}
-                  className="w-full h-32 md:h-40 object-cover"
-                />
-                <div className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-blue-600">
-                      {article.data.category}
-                    </span>
-                    {article.data.publication_date && (
-                      <span className="text-sm text-gray-500">
-                        {format(
-                          new Date(article.data.publication_date),
-                          "MMM dd, yyyy"
-                        )}
+          <section>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-blue-600 border-b-2 border-gray-100 pb-2 mb-4 uppercase">
+              Latest Articles
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {articles.map((article) => (
+                <article
+                  key={article.id}
+                  className="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition-shadow duration-300"
+                >
+                  <img
+                    src={article.data.featured_image.url}
+                    alt={article.data.featured_image.alt}
+                    className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="p-4">
+                    <div className="flex justify-between text-sm text-gray-500 mb-2">
+                      <span className="text-blue-600 font-semibold uppercase">
+                        {article.data.category}
                       </span>
+                      {article.data.publication_date && (
+                        <span>
+                          {format(
+                            new Date(article.data.publication_date),
+                            "MMM dd, yyyy"
+                          )}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800 mb-1 leading-tight">
+                      <Link
+                        to={`/article/${article.uid}`}
+                        className="hover:text-blue-700 transition-colors"
+                      >
+                        {article.data.title[0].text}
+                      </Link>
+                    </h3>
+                    <p className="text-gray-600 text-sm line-clamp-3">
+                      {article.data.excerpt[0].text}
+                    </p>
+                    {article.data.author?.[0] && (
+                      <div className="flex items-center mt-4">
+                        <img
+                          src={article.data.author[0].author_image.url}
+                          alt={article.data.author[0].author_name}
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                        <span className="ml-3 text-sm font-medium text-gray-700">
+                          {article.data.author[0].author_name}
+                        </span>
+                      </div>
                     )}
                   </div>
-
-                  <h2 className="text-xl font-semibold">
-                    <Link
-                      to={`/article/${article.uid}`}
-                      className="hover:text-blue-600 transition-colors"
-                    >
-                      {article.data.title[0].text}
-                    </Link>
-                  </h2>
-
-                  <p className="mt-2 text-gray-600 line-clamp-3">
-                    {article.data.excerpt[0].text}
-                  </p>
-
-                  {article.data.author && article.data.author.length > 0 && (
-                    <div className="flex items-center mt-4">
-                      <img
-                        src={article.data.author[0].author_image.url}
-                        alt={article.data.author[0].author_name}
-                        className="w-8 h-8 rounded-full"
-                      />
-                      <span className="ml-2 text-sm text-gray-700">
-                        {article.data.author[0].author_name}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </article>
-            ))}{" "}
-          </div>
+                </article>
+              ))}
+            </div>
+          </section>
         </main>
 
-        {/* Sidebar */}
-        <aside className="lg:w-1/4">
-          <div className="sticky top-4">
+        {/* Right Column / Sidebar */}
+        <aside className="lg:w-1/4 space-y-6">
+          <div className="sticky top-4 space-y-6">
             <SponsoredPosts />
             <CelebrityPoll />
           </div>
         </aside>
       </div>
-      <main className="w-full">
-        <div className="mt-8">
-          <PopularTopics />
-        </div>
-      </main>
+
+      {/* Full Width Section */}
+      <section className="mt-12">
+        <PopularTopics />
+      </section>
     </div>
   );
 }
+
 export default Home;

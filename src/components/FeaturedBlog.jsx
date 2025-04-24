@@ -21,7 +21,6 @@ const FeaturedBlog = () => {
           },
           limit: 5,
         });
-        console.log("Fetched articles:", response);
         setArticles(response);
         setLoading(false);
       } catch (error) {
@@ -56,65 +55,58 @@ const FeaturedBlog = () => {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="animate-pulse">
-          <div className="h-[400px] bg-gray-200 rounded-lg"></div>
+          <div className="h-[400px] bg-gray-200 rounded-xl shadow-inner"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container md:mx-auto md:px-4 py-4">
-      <div className="relative">
-        <Slider {...settings} className="featured-slider">
-          {articles.map((article) => (
-            <div key={article.id}>
-              <div className="relative h-[200px] md:h-[350px] rounded-lg overflow-hidden">
-                {/* Image Background */}
-                <img
-                  src={article.data.featured_image.url}
-                  alt={article.data.featured_image.alt || ""}
-                  className="w-full h-full object-cover"
-                />
+    <section className="container mx-auto px-4 py-6">
+      <Slider {...settings} className="rounded-xl overflow-hidden">
+        {articles.map((article) => (
+          <div key={article.id}>
+            <div className="relative h-[220px] md:h-[400px] rounded-xl overflow-hidden">
+              {/* Background Image */}
+              <img
+                src={article.data.featured_image.url}
+                alt={article.data.featured_image.alt || ""}
+                className="w-full h-full object-cover"
+              />
 
-                {/* Dark Overlay */}
-                <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent"></div>
 
-                {/* Content Overlay */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                  {/* Post Meta */}
-                  <div className="flex items-center space-x-4 mb-4 text-white">
-                    <div className="flex items-center">
-                      <span>
-                        {new Date(
-                          article.first_publication_date
-                        ).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <span>•</span>
-                    <span>{article.data.read_time || "5"} min read</span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">
-                    <Link
-                      to={`/article/${article.uid}`}
-                      className="hover:text-blue-300 transition-colors"
-                    >
-                      {article.data.title[0].text}
-                    </Link>
-                  </h3>
-
-                  {/* Excerpt */}
-                  <p className="text-white/80 mb-6 line-clamp-2">
-                    {article.data.excerpt[0].text}
-                  </p>
+              {/* Text Content */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 text-white">
+                <div className="flex items-center space-x-4 text-sm mb-3">
+                  <span>
+                    {new Date(
+                      article.first_publication_date
+                    ).toLocaleDateString()}
+                  </span>
+                  <span>•</span>
+                  <span>{article.data.read_time || "5"} min read</span>
                 </div>
+
+                <h3 className="text-xl md:text-3xl font-bold leading-snug mb-3">
+                  <Link
+                    to={`/article/${article.uid}`}
+                    className="hover:text-blue-400 transition-colors duration-300"
+                  >
+                    {article.data.title[0].text}
+                  </Link>
+                </h3>
+
+                <p className="text-white/80 text-sm md:text-base line-clamp-2">
+                  {article.data.excerpt[0].text}
+                </p>
               </div>
             </div>
-          ))}
-        </Slider>
-      </div>
-    </div>
+          </div>
+        ))}
+      </Slider>
+    </section>
   );
 };
 

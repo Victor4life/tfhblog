@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { useEffect, useState } from "react";
-import * as prismic from "@prismicio/client"; // Changed this import
+import * as prismic from "@prismicio/client";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -10,7 +9,6 @@ const PopularTopics = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      // Create client inside the fetch function
       const client = prismic.createClient(
         import.meta.env.VITE_PRISMIC_ENDPOINT,
         {
@@ -21,43 +19,36 @@ const PopularTopics = () => {
       const posts = await client.getAllByType("popularposts");
       setPopularPosts(posts);
     };
-    fetchPosts();
-  }, []); // Removed client dependency since we create it inside
 
-  // Rest of your component remains the same
+    fetchPosts();
+  }, []);
+
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 3500,
     pauseOnHover: true,
     arrows: true,
     responsive: [
       {
         breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
+        settings: { slidesToShow: 2 },
       },
       {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          dots: false,
-        },
+        breakpoint: 640,
+        settings: { slidesToShow: 1, dots: false },
       },
     ],
   };
 
   if (!popularPosts) {
     return (
-      <div className="loading-state">
-        <div className="loading-spinner"></div>
+      <div className="text-center py-10 text-gray-600">
+        <div className="animate-spin border-4 border-blue-500 border-t-transparent rounded-full w-10 h-10 mx-auto mb-3"></div>
         <p>Loading popular topics...</p>
       </div>
     );
@@ -65,198 +56,53 @@ const PopularTopics = () => {
 
   if (popularPosts.length === 0) {
     return (
-      <div className="no-posts">
+      <div className="text-center py-10 text-gray-500 bg-gray-50 rounded-xl">
         <p>No popular topics available at the moment.</p>
       </div>
     );
   }
 
   return (
-    <section className="popular-topics">
-      <h2 className="text-xl md:text-3xl font-bold text-blue-600 mb-8 py-2 uppercase tracking-wide border-b-2 border-gray-200 hover:text-blue-600 transition-colors duration-300">
+    <section className="px-4 py-8 max-w-screen-xl mx-auto">
+      <h2 className="text-2xl md:text-3xl font-bold text-blue-600 mb-6 uppercase tracking-wide border-b pb-2 border-gray-200">
         Popular Topics
       </h2>
-      <div className="slider-container">
-        <Slider {...settings}>
-          {popularPosts.map((post) => (
-            <div key={post.id} className="topic-slide">
-              <article className="topic-card">
-                <div className="image-container">
-                  {post.data.featured_image?.url ? (
-                    <img
-                      src={post.data.featured_image.url}
-                      alt={post.data.featured_image.alt || ""}
-                      className="topic-image"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="placeholder-image">
-                      <span>No image available</span>
-                    </div>
-                  )}
-                </div>
-                <div className="topic-content">
-                  <h3>{post.data.title || "Untitled"}</h3>
+
+      <Slider {...settings}>
+        {popularPosts.map((post) => (
+          <div key={post.id} className="px-2">
+            <article className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 bg-white h-[300px] relative">
+              <div className="w-full h-full relative">
+                {post.data.featured_image?.url ? (
+                  <img
+                    src={post.data.featured_image.url}
+                    alt={post.data.featured_image.alt || ""}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-sm">
+                    No image available
+                  </div>
+                )}
+
+                <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                  <h3 className="text-lg font-semibold leading-snug line-clamp-2">
+                    {post.data.title || "Untitled"}
+                  </h3>
                   {post.data.category && (
-                    <span className="category-tag">{post.data.category}</span>
+                    <span className="inline-block mt-2 text-xs bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                      {post.data.category}
+                    </span>
                   )}
                 </div>
-              </article>
-            </div>
-          ))}
-        </Slider>
-      </div>
+              </div>
+            </article>
+          </div>
+        ))}
+      </Slider>
     </section>
   );
 };
-
-// Enhanced styles
-const styles = `
-  .popular-topics {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .slider-container {
-    margin: 2rem 0;
-    position: relative;
-  }
-
-  .topic-slide {
-    padding: 1rem;
-    height: 300px; /* Fixed height for consistent slides */
-  }
-
-  .topic-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border: 1px solid #eee;
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .topic-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .image-container {
-    width: 100%;
-    height: 100%;
-    background: #f5f5f5;
-    overflow: hidden;
-  }
-
-  .topic-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .topic-card:hover .topic-image {
-    transform: scale(1.05);
-  }
-
-  .placeholder-image {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f5f5f5;
-    color: #666;
-  }
-
-  .topic-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1.5rem;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-    color: white;
-  }
-
-  .topic-content h3 {
-    margin: 0 0 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.4;
-    color: white;
-  }
-
-  .category-tag {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: white;
-    backdrop-filter: blur(4px);
-  }
-
-  /* Make sure the Slick slider displays items in a row */
-  .slick-track {
-    display: flex !important;
-  }
-
-  .slick-slide {
-    height: inherit !important;
-  }
-
-  .slick-slide > div {
-    height: 100%;
-  }
-
-  .loading-state,
-  .error-state,
-  .no-posts {
-    text-align: center;
-    padding: 3rem;
-    background: #f8f9fa;
-    border-radius: 12px;
-    margin: 1rem;
-    color: #555;
-  }
-
-  .loading-spinner {
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #007bff;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  @media (max-width: 768px) {
-    .popular-topics {
-      padding: 1rem;
-    }
-
-    .topic-content h3 {
-      font-size: 1.1rem;
-    }
-
-    .topic-slide {
-      height: 250px; /* Slightly smaller height for mobile */
-    }
-  }
-`;
-
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
 
 export default PopularTopics;

@@ -17,24 +17,25 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-white shadow-lg z-50 relative">
       <div className="container mx-auto px-4 md:px-14">
-        {/* Top bar */}
-        <div className="flex justify-between items-center py-2 border-b">
-          {/* Search bar */}
-          <i className="fa-solid fa-magnifying-glass"></i>
+        {/* Top Bar */}
+        <div className="flex justify-between items-center py-3 border-b">
+          {/* Left Search Icon */}
+          <i className="fa-solid fa-magnifying-glass text-gray-600"></i>
+
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="logo-container relative w-[200px] md:w-[300px] lg:w-[400px]">
+            <div className="relative w-[200px] md:w-[300px] lg:w-[400px]">
               <img
                 src="eluminary.png"
                 alt="E-Luminary Logo"
-                className="w-full h-auto object-contain max-h-[100px]"
+                className="w-full h-auto max-h-[100px] object-contain"
               />
             </div>
           </Link>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={toggleMenu}
             className="md:hidden p-2 text-gray-600"
@@ -45,39 +46,42 @@ function Navbar() {
             ></i>
           </button>
 
-          {/* Desktop Search and Social Icons */}
+          {/* Desktop Right Side */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Search button */}
             <button
               className="text-gray-600 hover:text-gray-900 transition-colors p-2"
               aria-label="Search"
-            ></button>
+            >
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
 
-            {/* Social media icons */}
+            {/* Social Icons */}
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="text-gray-600 hover:text-blue-600 transition-colors"
+                className="text-gray-600 hover:text-blue-600"
                 aria-label="Facebook"
               >
                 <i className="fa-brands fa-facebook-f"></i>
               </a>
               <a
                 href="#"
-                className="text-gray-600 hover:text-blue-400 transition-colors"
+                className="text-gray-600 hover:text-blue-400"
                 aria-label="Twitter"
               >
                 <i className="fa-brands fa-twitter"></i>
               </a>
               <a
                 href="#"
-                className="text-gray-600 hover:text-pink-600 transition-colors"
+                className="text-gray-600 hover:text-pink-600"
                 aria-label="Instagram"
               >
                 <i className="fa-brands fa-instagram"></i>
               </a>
               <a
                 href="#"
-                className="text-gray-600 hover:text-blue-800 transition-colors"
+                className="text-gray-600 hover:text-blue-800"
                 aria-label="LinkedIn"
               >
                 <i className="fa-brands fa-linkedin"></i>
@@ -86,7 +90,7 @@ function Navbar() {
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile Menu */}
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
@@ -103,12 +107,12 @@ function Navbar() {
           </div>
 
           {/* Mobile Categories */}
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col items-center space-y-2">
             {categories.map((category) => (
               <Link
                 key={category.slug}
                 to={`/category/${category.slug}`}
-                className="text-gray-600 hover:text-gray-900 transition-colors text-center py-2"
+                className="text-gray-600 hover:text-gray-900 transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {category.name}
