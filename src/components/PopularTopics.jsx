@@ -64,8 +64,8 @@ const PopularTopics = () => {
 
   return (
     <section className="px-4 py-8 max-w-screen-xl mx-auto">
-      <h2 className="text-2xl md:text-3xl font-bold text-blue-600 mb-6 uppercase tracking-wide border-b pb-2 border-gray-200">
-        Popular Topics
+      <h2 className="text-xl md:text-2xl font-bold text-blue-600 mb-6 uppercase tracking-wide border-b pb-2 border-gray-200">
+        Movies & TV Shows
       </h2>
 
       <Slider {...settings}>

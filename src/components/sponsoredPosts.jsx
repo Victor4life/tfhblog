@@ -41,8 +41,8 @@ const SponsoredPosts = () => {
 
   return (
     <section className="py-4">
-      <h2 className="text-xl md:text-3xl font-bold text-blue-600 mb-6 uppercase tracking-wide border-b border-gray-200">
-        Latest News
+      <h2 className="text-xl md:text-2xl font-bold text-blue-600 mb-6 uppercase tracking-wide border-b border-gray-200">
+        Trending Now
       </h2>
       <div className="flex flex-col gap-6">
         {posts.map((post) => (
