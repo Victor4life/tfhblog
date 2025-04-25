@@ -71,7 +71,6 @@ function Home() {
       <div className="flex flex-col lg:flex-row gap-8">
         <main className="lg:w-3/4 space-y-8">
           <FeaturedBlog />
-
           <section>
             <h2 className="text-2xl md:text-3xl font-extrabold text-blue-600 border-b-2 border-gray-100 pb-2 mb-4 uppercase">
               Latest Articles
