@@ -77,33 +77,22 @@ function Home() {
             </h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* First article — compact on mobile, large on md+ */}
               {paginatedArticles[0] && (
                 <article
                   key={paginatedArticles[0].id}
-                  className="lg:col-span-2 bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300"
+                  className="flex md:block items-center gap-3 bg-white rounded-xl shadow hover:shadow-md transition-shadow duration-300 p-3 md:p-0 md:overflow-hidden lg:col-span-2"
                 >
                   <img
                     src={paginatedArticles[0].data.featured_image.url}
                     alt={paginatedArticles[0].data.featured_image.alt}
-                    className="w-full h-80 object-cover"
+                    className="w-20 h-20 object-cover rounded-md md:rounded-none md:w-full md:h-80"
                   />
-                  <div className="p-6">
-                    <div className="flex justify-between text-sm text-gray-500 mb-2">
-                      <span className="text-blue-600 font-semibold uppercase">
-                        {paginatedArticles[0].data.category}
-                      </span>
-                      {paginatedArticles[0].data.publication_date && (
-                        <span>
-                          {format(
-                            new Date(
-                              paginatedArticles[0].data.publication_date
-                            ),
-                            "MMM dd, yyyy"
-                          )}
-                        </span>
-                      )}
+                  <div className="flex flex-col md:p-6">
+                    <div className="text-blue-600 text-xs font-semibold uppercase mb-1 md:mb-2">
+                      {paginatedArticles[0].data.category}
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2 leading-tight">
+                    <h2 className="text-sm font-bold text-gray-800 line-clamp-2 md:text-2xl md:leading-tight md:mb-2">
                       <Link
                         to={`/article/${paginatedArticles[0].uid}`}
                         className="hover:text-blue-700 transition-colors"
@@ -111,29 +100,38 @@ function Home() {
                         {paginatedArticles[0].data.title[0].text}
                       </Link>
                     </h2>
-                    <p className="text-gray-700 text-base line-clamp-3">
+                    <p className="hidden md:block text-gray-700 text-base line-clamp-3">
                       {paginatedArticles[0].data.excerpt[0].text}
                     </p>
+                    {paginatedArticles[0].data.publication_date && (
+                      <span className="text-gray-500 text-xs mt-2 hidden md:block">
+                        {format(
+                          new Date(paginatedArticles[0].data.publication_date),
+                          "MMM dd, yyyy"
+                        )}
+                      </span>
+                    )}
                   </div>
                 </article>
               )}
 
-              <div className="flex flex-col gap-6">
+              {/* Next two articles */}
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                 {paginatedArticles.slice(1, 3).map((article) => (
                   <article
                     key={article.id}
-                    className="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition-shadow duration-300"
+                    className="flex md:flex-col items-center md:items-start gap-3 md:gap-0 bg-white rounded-xl shadow hover:shadow-md transition-shadow duration-300 p-3 md:p-0 overflow-hidden"
                   >
                     <img
                       src={article.data.featured_image.url}
                       alt={article.data.featured_image.alt}
-                      className="w-full h-40 object-cover"
+                      className="w-20 h-20 object-cover rounded-md md:w-full md:h-40 md:rounded-t-xl"
                     />
-                    <div className="p-4">
-                      <span className="text-blue-600 text-xs font-semibold uppercase">
+                    <div className="flex flex-col md:p-4">
+                      <span className="text-blue-600 text-xs font-semibold uppercase mt-0 md:mt-2">
                         {article.data.category}
                       </span>
-                      <h3 className="text-lg font-semibold text-gray-800 mt-2 line-clamp-2">
+                      <h3 className="text-sm md:text-lg font-bold text-gray-800 line-clamp-2 mt-1">
                         <Link
                           to={`/article/${article.uid}`}
                           className="hover:text-blue-700 transition-colors"
@@ -146,6 +144,7 @@ function Home() {
                 ))}
               </div>
 
+              {/* Last three small articles */}
               <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {paginatedArticles.slice(3, 6).map((article) => (
                   <article
@@ -174,7 +173,6 @@ function Home() {
                 ))}
               </div>
             </div>
-
             <div className="mt-8 flex justify-center items-center space-x-2">
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

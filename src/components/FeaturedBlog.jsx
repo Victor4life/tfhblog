@@ -62,11 +62,11 @@ const FeaturedBlog = () => {
   }
 
   return (
-    <section className="container mx-auto px-4 py-6">
+    <section className="container mx-auto px-1 py-1 md:px-4 md:py-6">
       <Slider {...settings} className="rounded-xl overflow-hidden">
         {articles.map((article) => (
           <div key={article.id}>
-            <div className="relative h-[220px] md:h-[400px] rounded-xl overflow-hidden">
+            <div className="relative h-[250px] md:h-[400px] rounded-xl overflow-hidden">
               {/* Background Image */}
               <img
                 src={article.data.featured_image.url}

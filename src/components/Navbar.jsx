@@ -97,14 +97,6 @@ function Navbar() {
           } md:hidden py-4 border-b`}
         >
           {/* Mobile Search */}
-          <div className="flex justify-center mb-4">
-            <button
-              className="text-gray-600 hover:text-gray-900 transition-colors p-2"
-              aria-label="Search"
-            >
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </div>
 
           {/* Mobile Categories */}
           <div className="flex flex-col items-center space-y-2">
