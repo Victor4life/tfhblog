@@ -4,12 +4,11 @@ const CelebrityPoll = () => {
   const [selected, setSelected] = useState(null);
   const [voted, setVoted] = useState(false);
   const [data, setData] = useState({
-    question: "Who is your favorite celebrity?",
+    question: "Who is your favorite artist?",
     options: [
-      { id: 1, name: "Tom Hanks", votes: 150 },
-      { id: 2, name: "Morgan Freeman", votes: 120 },
-      { id: 3, name: "Meryl Streep", votes: 180 },
-      { id: 4, name: "Leonardo DiCaprio", votes: 160 },
+      { id: 1, name: "Davido🎙️", votes: 150 },
+      { id: 2, name: "Wizkid🦅", votes: 120 },
+      { id: 3, name: "Burnaboy🦍", votes: 180 },
     ],
   });
 
